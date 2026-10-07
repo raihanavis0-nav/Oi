@@ -10,27 +10,17 @@ permissions:
 
 jobs:
   import-project:
-    if: ${{ hashFiles('.import/source.part.aa', '.import/source.part.ab', '.import/source.part.ac', '.import/source.part.ad') != '' }}
+    if: ${{ hashFiles('.import/ready') != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Verify all archive chunks exist
-        id: chunks
-        shell: bash
-        run: |
-          if [[ -f .import/source.part.aa && -f .import/source.part.ab && -f .import/source.part.ac && -f .import/source.part.ad ]]; then
-            echo "ready=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "ready=false" >> "$GITHUB_OUTPUT"
-          fi
       - name: Extract project to repository root
-        if: steps.chunks.outputs.ready == 'true'
         shell: bash
         run: |
           set -euo pipefail
-          cat .import/source.part.aa .import/source.part.ab .import/source.part.ac .import/source.part.ad | base64 -d > /tmp/copy-main.zip
+          cat .import/source.part.* | base64 -d > /tmp/copy-main.zip
           rm -rf /tmp/project-import
           mkdir -p /tmp/project-import
           unzip -q /tmp/copy-main.zip -d /tmp/project-import
@@ -41,7 +31,6 @@ jobs:
           rmdir .github/workflows 2>/dev/null || true
           rmdir .github 2>/dev/null || true
       - name: Commit imported project
-        if: steps.chunks.outputs.ready == 'true'
         shell: bash
         run: |
           set -euo pipefail
