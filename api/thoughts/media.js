@@ -80,6 +80,8 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed." });
   }
 
+  if (!reader.requireSession(req, res)) return;
+
   const path = safeMediaPath(req.query && req.query.path);
   if (!path) {
     return res.status(400).json({ error: "Invalid media path." });

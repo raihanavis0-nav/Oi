@@ -8,11 +8,11 @@ function accessCode() {
 }
 
 function githubToken() {
-  return process.env.THOUGHTS_GITHUB_TOKEN || "";
+  return process.env.THOUGHTS_GITHUB_TOKEN || "public-reader";
 }
 
 function isConfigured() {
-  return Boolean(accessCode().length >= 16);
+  return Boolean(accessCode().length >= 16 && githubToken());
 }
 
 function safeEqual(a, b) {
@@ -38,7 +38,7 @@ function parseCookies(header) {
 function signingSecret() {
   return crypto
     .createHash("sha256")
-    .update("thoughts-reader\u0000" + accessCode())
+    .update("thoughts-reader\u0000" + accessCode() + "\u0000" + githubToken())
     .digest();
 }
 

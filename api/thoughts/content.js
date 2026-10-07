@@ -22,6 +22,8 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed." });
   }
 
+  if (!reader.requireSession(req, res)) return;
+
   try {
     const library = await store.readLibrary();
     return res.status(200).json({

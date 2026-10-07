@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="css/thoughts-synopsis.css" />
     <link rel="stylesheet" href="css/thoughts-ending-song.css" />
   </head>
-  <body>
+  <body class="is-locked">
     <div class="page-shell">
       <header class="thoughts-header" aria-label="Archive header">
         <div class="header-tools">
@@ -39,12 +39,28 @@
             <span aria-hidden="true">/</span>
             <button type="button" data-theme-choice="dark">Dark</button>
           </div>
+          <button class="lock-button" id="lockButton" type="button" hidden>
+            Lock
+          </button>
         </div>
       </header>
 
       <main id="thoughtsApp" aria-live="polite">
+        <section class="access-gate" id="accessGate">
+          <div class="gate-form">
+            <input
+              id="accessCodeInput"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Access code"
+              aria-label="Access code"
+            />
+            <button id="unlockButton" type="button">Enter</button>
+          </div>
+          <p class="gate-status" id="gateStatus" role="status"></p>
+        </section>
 
-        <div id="libraryApp">
+        <div id="libraryApp" hidden>
           <section class="library-home" id="libraryHome">
 
             <section class="library-section" id="seriesSection">

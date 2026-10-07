@@ -2,6 +2,9 @@
   "use strict";
 
   var API = {
+    session: "/api/thoughts/session",
+    unlock: "/api/thoughts/unlock",
+    lock: "/api/thoughts/lock",
     content: "/api/thoughts/content",
     media: "/api/thoughts/media",
   };
@@ -862,9 +865,23 @@
     renderStory(story);
   }
 
+  function showGate(message) {
+    document.body.classList.add("is-locked");
+    $("accessGate").hidden = false;
+    $("libraryApp").hidden = true;
+    $("lockButton").hidden = true;
+    $("gateStatus").textContent = message || "";
+    $("accessCodeInput").value = "";
+    $("accessCodeInput").focus();
+    document.title = "Archive";
+  }
+
   function showLibrary() {
     document.body.classList.remove("is-locked");
+    $("accessGate").hidden = true;
     $("libraryApp").hidden = false;
+    $("lockButton").hidden = false;
+    $("gateStatus").textContent = "";
   }
 
   function loadLibrary() {
@@ -882,20 +899,96 @@
         renderLibrary();
       })
       .catch(function (error) {
-        showLibrary();
-        var empty = $("emptyState");
-        if (empty) {
-          empty.hidden = false;
-          var message = empty.querySelector("p");
-          if (message) message.textContent = "The archive could not be loaded right now.";
+        if (error.status === 401) {
+          showGate();
+          return;
         }
-        console.error("Stories library:", error);
+
+        showGate("The private archive could not be loaded right now.");
+      });
+  }
+
+  function unlock() {
+    var code = $("accessCodeInput").value;
+    var button = $("unlockButton");
+
+    if (!code) {
+      $("gateStatus").textContent = "Enter the access code.";
+      return;
+    }
+
+    button.disabled = true;
+    $("gateStatus").textContent = "Checking…";
+
+    apiJson(API.unlock, {
+      method: "POST",
+      body: JSON.stringify({ code: code }),
+    })
+      .then(function () {
+        $("accessCodeInput").value = "";
+        return loadLibrary();
+      })
+      .catch(function (error) {
+        $("gateStatus").textContent = error.message || "Wrong access code.";
+      })
+      .finally(function () {
+        button.disabled = false;
+      });
+  }
+
+  function lock() {
+    apiJson(API.lock, {
+      method: "POST",
+      body: "{}",
+    })
+      .catch(function () {
+        return null;
+      })
+      .finally(function () {
+        state.data = {
+          series: [],
+          subseries: [],
+          characters: [],
+          stories: [],
+        };
+        history.replaceState({}, "", "read");
+        showGate();
+      });
+  }
+
+  function checkSession() {
+    $("gateStatus").textContent = "";
+
+    apiJson(API.session)
+      .then(function (result) {
+        if (!result.configured) {
+          showGate("Reader access is not configured yet.");
+          $("unlockButton").disabled = true;
+          return;
+        }
+
+        if (!result.authenticated) {
+          showGate();
+          return;
+        }
+
+        return loadLibrary();
+      })
+      .catch(function () {
+        showGate("Could not check access right now.");
       });
   }
 
   function wire() {
     setupThemeSwitch();
-    loadLibrary();
+
+    $("unlockButton").addEventListener("click", unlock);
+    $("accessCodeInput").addEventListener("keydown", function (event) {
+      if (event.key === "Enter") unlock();
+    });
+    $("lockButton").addEventListener("click", lock);
+
+    checkSession();
   }
 
   document.addEventListener("DOMContentLoaded", wire);
