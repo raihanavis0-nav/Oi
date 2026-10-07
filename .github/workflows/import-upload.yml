@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   import-project:
-    if: ${{ hashFiles('.import/ready') != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,6 +19,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          test -f .import/ready
+          test -f .import/source.part.00
           cat .import/source.part.* | base64 -d > /tmp/copy-main.zip
           rm -rf /tmp/project-import
           mkdir -p /tmp/project-import
