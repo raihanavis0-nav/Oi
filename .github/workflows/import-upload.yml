@@ -1,0 +1,52 @@
+name: Import project archive
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  import-project:
+    if: ${{ hashFiles('.import/source.part.aa', '.import/source.part.ab', '.import/source.part.ac', '.import/source.part.ad') != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Verify all archive chunks exist
+        id: chunks
+        shell: bash
+        run: |
+          if [[ -f .import/source.part.aa && -f .import/source.part.ab && -f .import/source.part.ac && -f .import/source.part.ad ]]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Extract project to repository root
+        if: steps.chunks.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .import/source.part.aa .import/source.part.ab .import/source.part.ac .import/source.part.ad | base64 -d > /tmp/copy-main.zip
+          rm -rf /tmp/project-import
+          mkdir -p /tmp/project-import
+          unzip -q /tmp/copy-main.zip -d /tmp/project-import
+          shopt -s dotglob nullglob
+          cp -a /tmp/project-import/copy-main/. .
+          rm -rf .import
+          rm -f .github/workflows/import-upload.yml
+          rmdir .github/workflows 2>/dev/null || true
+          rmdir .github 2>/dev/null || true
+      - name: Commit imported project
+        if: steps.chunks.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Import project from copy-main.zip"
+          git push
