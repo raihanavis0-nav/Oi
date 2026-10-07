@@ -1,5 +1,5 @@
-const OWNER = "alfathxxxxyz";
-const REPO = "copy";
+const OWNER = "raihanavis0-nav";
+const REPO = "Oi";
 const DATA_BRANCH = "thoughts-data";
 const DATA_PATH = "content/thoughts.json";
 const API_ROOT = "https://api.github.com/repos/" + OWNER + "/" + REPO;
