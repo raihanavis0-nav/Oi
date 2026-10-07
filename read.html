@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="description" content="Private fiction archive." />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      (function () {
+        var saved = localStorage.getItem("thoughts_theme");
+        var preferred =
+          window.matchMedia &&
+          window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        document.documentElement.dataset.theme = saved || preferred;
+      })();
+    </script>
+    <title>Archive</title>
+    <link rel="stylesheet" href="css/thoughts.css" />
+    <link rel="stylesheet" href="css/thoughts-character-groups.css" />
+    <link rel="stylesheet" href="css/thoughts-character-detail.css" />
+    <link rel="stylesheet" href="css/thoughts-synopsis.css" />
+    <link rel="stylesheet" href="css/thoughts-ending-song.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="thoughts-header" aria-label="Archive header">
+        <div class="header-tools">
+          <div class="theme-switch" role="group" aria-label="Color theme">
+            <button type="button" data-theme-choice="light">Light</button>
+            <span aria-hidden="true">/</span>
+            <button type="button" data-theme-choice="dark">Dark</button>
+          </div>
+        </div>
+      </header>
+
+      <main id="thoughtsApp" aria-live="polite">
+
+        <div id="libraryApp">
+          <section class="library-home" id="libraryHome">
+
+            <section class="library-section" id="seriesSection">
+              <div class="section-heading">
+                <h2>Series</h2>
+              </div>
+              <div id="seriesList"></div>
+            </section>
+
+            <section class="library-section" id="charactersSection">
+              <div class="section-heading">
+                <h2>Characters</h2>
+              </div>
+              <div class="character-grid" id="characterGrid"></div>
+            </section>
+
+            <section class="empty-state" id="emptyState" hidden>
+              <p>Nothing published here yet.</p>
+            </section>
+          </section>
+
+          <article class="story-view" id="storyView" hidden>
+            <a class="back-link" href="read">← Archive</a>
+
+            <header class="story-header">
+              <p class="story-path" id="storyPath"></p>
+              <figure class="story-cover" id="storyCover" hidden>
+                <img id="storyCoverImage" alt="" />
+              </figure>
+              <h1 id="storyTitle"></h1>
+              <p class="story-date" id="storyDate"></p>
+            </header>
+
+            <section
+              class="story-characters"
+              id="storyCharacters"
+              hidden
+              aria-label="Characters in this story"
+            ></section>
+
+            <div class="post-body" id="storyBody"></div>
+
+            <section
+              class="ending-song-card"
+              id="endingSongCard"
+              hidden
+              aria-label="Ending song"
+              aria-live="polite"
+            >
+              <p class="ending-song-kicker" id="endingSongKicker"></p>
+              <div class="ending-song-head">
+                <div class="ending-song-title-wrap">
+                  <h2 class="ending-song-title" id="endingSongTitle"></h2>
+                  <p class="ending-song-artist" id="endingSongArtist"></p>
+                </div>
+                <button class="ending-song-play" id="endingSongPlay" type="button">Play</button>
+              </div>
+              <audio id="endingSongAudio" preload="metadata"></audio>
+            </section>
+
+            <nav class="story-nav" id="storyNav" aria-label="Story navigation">
+              <a id="prevStory" href="#" hidden></a>
+              <a id="nextStory" href="#" hidden></a>
+            </nav>
+          </article>
+        </div>
+      </main>
+
+      <footer class="thoughts-footer">
+        <span>Private fiction archive.</span>
+      </footer>
+    </div>
+
+    <script src="js/thoughts-rich-content.js" defer></script>
+    <script src="js/thoughts.js" defer></script>
+    <script src="js/thoughts-rich-reader.js" defer></script>
+    <script src="js/thoughts-ending-song.js" defer></script>
+    <script src="js/thoughts-empty-structure.js" defer></script>
+    <script src="js/thoughts-character-groups.js" defer></script>
+    <script src="js/thoughts-character-detail.js" defer></script>
+  </body>
+</html>

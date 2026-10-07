@@ -1,0 +1,253 @@
+.legacy-editor-compat {
+  display: none !important;
+}
+
+.wysiwyg-label {
+  color: var(--muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.writer-toolbar {
+  position: sticky;
+  top: 104px;
+  z-index: 11;
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  margin: 0 0 28px;
+  padding: 7px;
+  border: 1px solid var(--line);
+  background: var(--admin-toolbar);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px color-mix(in srgb, var(--ink) 4%, transparent);
+}
+
+.toolbar-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  min-height: 30px;
+  padding-right: 5px;
+  margin-right: 2px;
+  border-right: 1px solid var(--line);
+}
+
+.toolbar-group:last-child {
+  border-right: 0;
+  padding-right: 0;
+  margin-right: 0;
+}
+
+.toolbar-selects {
+  gap: 4px;
+}
+
+.writer-toolbar button,
+.writer-toolbar select,
+.color-tools label {
+  min-height: 30px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.7rem;
+}
+
+.writer-toolbar button {
+  min-width: 30px;
+  padding: 5px 7px;
+  border-radius: 3px;
+}
+
+.writer-toolbar button:hover,
+.writer-toolbar button.is-active,
+.writer-toolbar select:hover,
+.color-tools label:hover {
+  background: var(--soft);
+  color: var(--ink);
+}
+
+.writer-toolbar button.is-active {
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.writer-toolbar select {
+  max-width: 150px;
+  padding: 4px 23px 4px 7px;
+  outline: none;
+  cursor: pointer;
+}
+
+#editorFontSelect {
+  min-width: 126px;
+}
+
+#editorFontSizeSelect {
+  width: 62px;
+}
+
+#editorLineHeightSelect {
+  width: 82px;
+}
+
+.color-tools label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.color-tools label span {
+  pointer-events: none;
+  font-weight: 600;
+}
+
+.color-tools input[type="color"] {
+  position: absolute;
+  inset: auto 4px 2px;
+  width: 26px;
+  height: 5px;
+  padding: 0;
+  border: 0;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.alignment-tools button:nth-child(1) { text-align: left; }
+.alignment-tools button:nth-child(2) { text-align: center; }
+.alignment-tools button:nth-child(3) { text-align: right; }
+
+.story-body-editor {
+  width: 100%;
+  min-height: 62vh;
+  padding: 4px 0 120px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: text;
+  caret-color: var(--ink);
+}
+
+.story-body-editor:empty::before {
+  content: attr(data-placeholder);
+  color: color-mix(in srgb, var(--muted) 55%, transparent);
+  pointer-events: none;
+}
+
+.story-body-editor:focus::before {
+  opacity: 0.7;
+}
+
+.story-body-editor a {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.story-body-editor hr {
+  margin: 2.2em 0;
+  border: 0;
+  border-top: 1px solid var(--line);
+}
+
+.story-body-editor [style*="font-family"] {
+  font-kerning: normal;
+}
+
+.story-body-editor figure {
+  cursor: default;
+}
+
+.story-body-editor figcaption {
+  min-height: 1em;
+  outline: 0;
+}
+
+.story-body-editor figcaption:focus {
+  color: var(--ink);
+}
+
+@media (max-width: 760px) {
+  .wysiwyg-label {
+    display: none;
+  }
+
+  .writer-toolbar {
+    top: 96px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
+  }
+
+  .toolbar-group {
+    flex: 0 0 auto;
+  }
+
+  .story-body-editor {
+    min-height: 68vh;
+  }
+}
+
+
+/* iPhone editor controls */
+@media (max-width: 480px) {
+  .thoughts-admin-body .writer-toolbar {
+    top: calc(96px + env(safe-area-inset-top));
+    flex-wrap: nowrap;
+    gap: 3px;
+    padding: 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .thoughts-admin-body .writer-toolbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .thoughts-admin-body .toolbar-group {
+    min-height: 44px;
+    padding-right: 3px;
+    margin-right: 1px;
+  }
+
+  .thoughts-admin-body .writer-toolbar button,
+  .thoughts-admin-body .writer-toolbar select,
+  .thoughts-admin-body .color-tools label {
+    min-height: 44px;
+    font-size: 16px;
+  }
+
+  .thoughts-admin-body .writer-toolbar button {
+    min-width: 44px;
+    padding: 8px 10px;
+  }
+
+  .thoughts-admin-body .writer-toolbar select {
+    max-width: 150px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .thoughts-admin-body .color-tools label {
+    width: 44px;
+    min-width: 44px;
+  }
+
+  .thoughts-admin-body .story-body-editor {
+    min-height: 58dvh;
+    padding-bottom: max(96px, calc(72px + env(safe-area-inset-bottom)));
+    font-size: 17px;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+}

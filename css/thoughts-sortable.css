@@ -1,0 +1,235 @@
+#entityOrderField,
+#storyActionsDialog .dialog-field:has(#storyOrderInput) {
+  display: none !important;
+}
+
+.character-drag-handle {
+  display: none !important;
+}
+
+.unified-sort-handle {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 26px;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  opacity: 0.42;
+  transition: opacity 120ms ease, color 120ms ease, background-color 120ms ease;
+}
+
+.unified-sort-handle:hover,
+.unified-sort-handle:focus-visible,
+.unified-sort-handle.is-grabbing {
+  color: var(--ink);
+  opacity: 1;
+  background: color-mix(in srgb, var(--soft) 72%, transparent);
+}
+
+.unified-sort-handle:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.unified-sort-handle.is-grabbing,
+body.is-library-sorting,
+body.is-library-sorting * {
+  cursor: grabbing !important;
+}
+
+.admin-series-block > .series-title-row,
+.admin-subseries-title-row {
+  justify-content: flex-start;
+}
+
+.admin-series-block > .series-title-row .series-title,
+.admin-subseries-title-row .subseries-title {
+  margin-right: auto;
+}
+
+.admin-series-block > .series-title-row > .unified-sort-handle,
+.admin-subseries-title-row > .unified-sort-handle {
+  margin-left: -5px;
+  margin-right: 5px;
+}
+
+.admin-story-row {
+  grid-template-columns: 26px 42px minmax(0, 1fr) auto auto !important;
+  align-items: center;
+}
+
+.admin-story-row > .unified-sort-handle {
+  margin-left: -6px;
+}
+
+.character-card.admin-character-card > .unified-sort-handle-characters {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  z-index: 5;
+  border: 1px solid color-mix(in srgb, var(--line) 78%, transparent);
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  opacity: 0;
+}
+
+.character-card.admin-character-card:hover > .unified-sort-handle-characters,
+.character-card.admin-character-card > .unified-sort-handle-characters:focus-visible,
+.character-card.admin-character-card > .unified-sort-handle-characters.is-grabbing {
+  opacity: 1;
+}
+
+.unified-sort-placeholder {
+  box-sizing: border-box;
+  border: 1px dashed color-mix(in srgb, var(--ink) 35%, var(--line));
+  background: color-mix(in srgb, var(--soft) 52%, transparent);
+  animation: sortablePulse 900ms ease-in-out infinite alternate;
+}
+
+.unified-sort-placeholder-series,
+.unified-sort-placeholder-chapters {
+  border-left: 0;
+  border-right: 0;
+  background: color-mix(in srgb, var(--soft) 24%, transparent);
+}
+
+.unified-sort-placeholder-stories {
+  min-height: 38px;
+}
+
+.unified-sort-placeholder-characters {
+  width: 120px !important;
+  aspect-ratio: 3 / 4;
+  height: auto !important;
+}
+
+.unified-sort-ghost {
+  position: fixed;
+  z-index: 10000;
+  pointer-events: none;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+  color: var(--ink);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-size: 0.78rem;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.unified-sort-ghost-characters {
+  max-width: 180px !important;
+}
+
+.is-order-saving .unified-sort-handle {
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+body.is-library-sorting {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+@keyframes sortablePulse {
+  from { opacity: 0.52; }
+  to { opacity: 0.9; }
+}
+
+@media (max-width: 680px) {
+  .unified-sort-handle {
+    opacity: 0.72;
+  }
+
+  .character-card.admin-character-card > .unified-sort-handle-characters {
+    opacity: 0.82;
+  }
+
+  .admin-story-row {
+    grid-template-columns: 26px 34px minmax(0, 1fr) auto !important;
+  }
+
+  .admin-story-row time {
+    display: none;
+  }
+}
+
+
+/* iPhone sorting targets */
+@media (max-width: 480px) {
+  .thoughts-admin-body .unified-sort-handle {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+    font-size: 1.08rem;
+    opacity: 0.78;
+  }
+
+  .thoughts-admin-body .admin-series-block > .series-title-row > .unified-sort-handle,
+  .thoughts-admin-body .admin-subseries-title-row > .unified-sort-handle,
+  .thoughts-admin-body .admin-story-row > .unified-sort-handle {
+    margin-left: -4px;
+    margin-right: 0;
+  }
+
+  .thoughts-admin-body .admin-story-row {
+    grid-template-columns: 40px 28px minmax(0, 1fr) auto !important;
+    gap: 6px;
+    min-height: 52px;
+  }
+
+  .thoughts-admin-body .character-card.admin-character-card > .unified-sort-handle-characters {
+    width: 40px;
+    height: 40px;
+    top: 6px;
+    left: 6px;
+    opacity: 0.88;
+  }
+
+  .thoughts-admin-body .unified-sort-placeholder-characters {
+    width: 100% !important;
+  }
+
+  .thoughts-admin-body .unified-sort-ghost {
+    max-width: calc(100vw - 32px);
+  }
+}
+
+
+/* Mobile story row breathing room */
+@media (max-width: 480px) {
+  .thoughts-admin-body .admin-story-row {
+    min-height: 72px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    row-gap: 5px;
+  }
+
+  .thoughts-admin-body .admin-story-row .story-open {
+    min-width: 0;
+    padding: 3px 0;
+    line-height: 1.16;
+    overflow-wrap: anywhere;
+  }
+
+  .thoughts-admin-body .admin-story-row > .story-index,
+  .thoughts-admin-body .admin-story-row > .unified-sort-handle,
+  .thoughts-admin-body .admin-story-row > .admin-row-tools {
+    align-self: center;
+  }
+}

@@ -1,0 +1,86 @@
+.admin-collapse-toggle {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 22px;
+  cursor: pointer;
+  line-height: 1;
+  font: inherit;
+  font-size: 0.78rem;
+}
+
+.admin-collapse-toggle:hover,
+.admin-collapse-toggle:focus-visible {
+  color: var(--ink);
+}
+
+.admin-collapse-toggle:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.admin-collapse-icon {
+  display: block;
+  transform: translateY(-0.5px);
+}
+
+.admin-series-block > .series-title-row > .admin-collapse-toggle,
+.admin-subseries-title-row > .admin-collapse-toggle {
+  margin-left: -2px;
+  margin-right: 1px;
+}
+
+.admin-series-block.is-collapsed > :not(.series-title-row) {
+  display: none !important;
+}
+
+.subseries-block.is-collapsed > :not(.admin-subseries-title-row) {
+  display: none !important;
+}
+
+.character-series-heading {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.character-series-heading > .admin-collapse-toggle {
+  margin-left: -5px;
+}
+
+.character-series-group.is-collapsed > .admin-character-card {
+  display: none !important;
+}
+
+.character-series-group.is-collapsed {
+  gap: 0;
+}
+
+.character-series-group.is-collapsed .character-series-heading {
+  margin-bottom: 0;
+}
+
+
+/* iPhone collapse targets */
+@media (max-width: 480px) {
+  .thoughts-admin-body .admin-collapse-toggle {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+    font-size: 0.9rem;
+    touch-action: manipulation;
+  }
+
+  .thoughts-admin-body .admin-series-block > .series-title-row > .admin-collapse-toggle,
+  .thoughts-admin-body .admin-subseries-title-row > .admin-collapse-toggle,
+  .thoughts-admin-body .character-series-heading > .admin-collapse-toggle {
+    margin-left: -4px;
+    margin-right: 0;
+  }
+}

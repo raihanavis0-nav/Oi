@@ -1,0 +1,193 @@
+.story-synopsis {
+  max-width: 58ch;
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.story-synopsis-input {
+  display: block;
+  width: 100%;
+  min-height: 3.1em;
+  margin: 16px 0 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  resize: vertical;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--font-editorial);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.story-synopsis-input::placeholder {
+  color: color-mix(in srgb, var(--muted) 55%, transparent);
+}
+
+.admin-story-row.has-story-synopsis {
+  grid-template-rows: auto auto;
+  row-gap: 2px;
+  align-items: center;
+}
+
+.admin-story-row.has-story-synopsis > .unified-sort-handle {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.admin-story-row.has-story-synopsis > .story-index {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.admin-story-row.has-story-synopsis > .story-open {
+  grid-column: 3;
+  grid-row: 1;
+  min-width: 0;
+  align-self: end;
+}
+
+.admin-story-row.has-story-synopsis > time {
+  grid-column: 4;
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.admin-story-row.has-story-synopsis > .admin-row-tools {
+  grid-column: 5;
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+.admin-story-synopsis {
+  grid-column: 3;
+  grid-row: 2;
+  display: -webkit-box;
+  min-width: 0;
+  max-width: 62ch;
+  margin: 2px 0 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 400;
+  line-height: 1.35;
+  white-space: normal;
+  pointer-events: none;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+@media (max-width: 680px) {
+  .story-synopsis,
+  .story-synopsis-input {
+    font-size: 0.96rem;
+  }
+
+  .admin-story-synopsis {
+    font-size: 0.66rem;
+  }
+
+  .admin-story-row.has-story-synopsis > .admin-row-tools {
+    grid-column: 4;
+  }
+
+  .admin-story-row.has-story-synopsis > time {
+    display: none;
+  }
+}
+
+
+/* iPhone synopsis fields */
+@media (max-width: 480px) {
+  .story-synopsis {
+    margin-top: 14px;
+    font-size: 0.96rem;
+    line-height: 1.48;
+  }
+
+  .story-synopsis-input {
+    min-height: 64px;
+    font-size: 16px;
+  }
+
+  .thoughts-admin-body .admin-story-synopsis {
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+}
+
+
+/* Mobile synopsis spacing */
+@media (max-width: 480px) {
+  .thoughts-admin-body .admin-story-row.has-story-synopsis {
+    row-gap: 6px;
+  }
+
+  .thoughts-admin-body .admin-story-row.has-story-synopsis > .story-open {
+    align-self: end;
+  }
+
+  .thoughts-admin-body .admin-story-synopsis {
+    margin-top: 0;
+    padding-bottom: 2px;
+  }
+}
+
+
+/* Reader library synopsis */
+.story-title-stack {
+  min-width: 0;
+}
+
+.story-title-stack > a {
+  display: inline;
+  min-width: 0;
+}
+
+.story-list-synopsis {
+  display: -webkit-box;
+  min-width: 0;
+  max-width: 58ch;
+  margin: 4px 0 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 400;
+  line-height: 1.35;
+  white-space: normal;
+  pointer-events: none;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.story-row.has-list-synopsis {
+  align-items: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+@media (max-width: 480px) {
+  .story-row.has-list-synopsis {
+    min-height: 72px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .story-row.has-list-synopsis .story-title-stack > a {
+    display: inline;
+    min-height: 0;
+    padding: 0;
+    line-height: 1.18;
+  }
+
+  .story-list-synopsis {
+    margin-top: 5px;
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+}
