@@ -13,21 +13,21 @@ function isConfigured() {
 }
 
 function headers() {
-  return {
-    Authorization: "Bearer " + githubToken(),
+  const token = githubToken();
+  const result = {
     Accept: "application/vnd.github+json",
     "X-GitHub-Api-Version": "2022-11-28",
     "Content-Type": "application/json",
   };
+
+  if (token) {
+    result.Authorization = "Bearer " + token;
+  }
+
+  return result;
 }
 
 async function githubJson(url, options) {
-  if (!isConfigured()) {
-    const error = new Error("GitHub storage is not configured.");
-    error.status = 503;
-    throw error;
-  }
-
   const response = await fetch(
     url,
     Object.assign({}, options || {}, {
@@ -57,21 +57,19 @@ async function getFile(path) {
 }
 
 async function getRawFile(path) {
-  if (!isConfigured()) {
-    const error = new Error("GitHub storage is not configured.");
-    error.status = 503;
-    throw error;
+  const token = githubToken();
+  const rawHeaders = {
+    Accept: "application/vnd.github.raw+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+
+  if (token) {
+    rawHeaders.Authorization = "Bearer " + token;
   }
 
   const response = await fetch(
     contentUrl(path) + "?ref=" + encodeURIComponent(DATA_BRANCH),
-    {
-      headers: {
-        Authorization: "Bearer " + githubToken(),
-        Accept: "application/vnd.github.raw+json",
-        "X-GitHub-Api-Version": "2022-11-28",
-      },
-    }
+    { headers: rawHeaders }
   );
 
   if (!response.ok) {
@@ -102,6 +100,12 @@ async function readLibrary() {
 }
 
 async function writeLibrary(data, message, expectedSha) {
+  if (!isConfigured()) {
+    const error = new Error("GitHub storage is not configured.");
+    error.status = 503;
+    throw error;
+  }
+
   const latest = await getFile(DATA_PATH);
 
   if (expectedSha && latest.sha !== expectedSha) {
@@ -130,6 +134,12 @@ async function writeLibrary(data, message, expectedSha) {
 }
 
 async function writeMedia(path, base64Content, message) {
+  if (!isConfigured()) {
+    const error = new Error("GitHub storage is not configured.");
+    error.status = 503;
+    throw error;
+  }
+
   return githubJson(contentUrl(path), {
     method: "PUT",
     body: JSON.stringify({
