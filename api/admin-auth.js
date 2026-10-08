@@ -43,7 +43,7 @@ module.exports = async function handler(req, res) {
     }
 
     if (!auth.isConfigured()) {
-      return res.status(503).json({ error: "ADMIN_PASSWORD is not configured." });
+      return res.status(503).json({ error: "THOUGHTS_ACCESS_CODE must be at least 4 characters." });
     }
 
     const attempt = rateLimit.check(req, res, "archive-admin-login", {
