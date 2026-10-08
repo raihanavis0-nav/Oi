@@ -66,6 +66,15 @@
       "order": 6,
       "bio": "Kepala polisi yang baik dan ramah namun tegas,  satu - satunya yang tidak bisa dia lawan adalah putrinya sendiri, Aoi, namun.. dia juga menyimpan sebuah rahasia besar di hidupnya yang bahkan anaknya sendiri tidak tahu",
       "portrait": "assets/thoughts/1791446586594-481444-341378.webp"
+    },
+    {
+      "id": "character-1791446917185",
+      "name": "Damian Sterling",
+      "seriesId": "",
+      "subseriesId": "",
+      "order": 7,
+      "bio": "Anak tunggal dari keluarga Sterling, senior di kampus Aoi, banyak orang yang mengira bahwa dia anak orang kaya yang ''baik'' namun sebagian orang juga mengetahui sifat sesungguhnya seorang Damian, dan kali ini... ada yang sedang berusaha membongkar rahasia keluarganya",
+      "portrait": "assets/thoughts/1791446915846-7bf82f-345206.webp"
     }
   ],
   "stories": [
