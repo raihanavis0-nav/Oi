@@ -100,7 +100,7 @@
 
     request("GET").then(function (result) {
       if (!result.configured) {
-        showLogin("ADMIN_PASSWORD has not been set in Vercel yet.");
+        showLogin("THOUGHTS_ACCESS_CODE must be set in Vercel (minimum 4 characters).");
         return;
       }
 
