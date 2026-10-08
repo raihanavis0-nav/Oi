@@ -1841,12 +1841,11 @@
     return loadImage(file).then(function (image) {
       var width = image.naturalWidth;
       var height = image.naturalHeight;
-      var maxWidth = 1400;
-
-      if (width > maxWidth) {
-        height = Math.round(height * (maxWidth / width));
-        width = maxWidth;
-      }
+      // Limit both axes; tall phone images previously bypassed the width-only cap.
+      var maxSide = 1600;
+      var scale = Math.min(1, maxSide / Math.max(width, height));
+      width = Math.max(1, Math.round(width * scale));
+      height = Math.max(1, Math.round(height * scale));
 
       var canvas = document.createElement("canvas");
       canvas.width = width;
@@ -1896,6 +1895,9 @@
       }
 
       return blobToBase64(result.blob).then(function (content) {
+        if (content.length > 3800000) {
+          throw new Error("Image is too large after compression. Please choose a smaller image.");
+        }
         return apiJson(API.upload, {
           method: "POST",
           body: JSON.stringify({
