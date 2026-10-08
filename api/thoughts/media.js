@@ -80,8 +80,6 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed." });
   }
 
-  if (!reader.requireSession(req, res)) return;
-
   const path = safeMediaPath(req.query && req.query.path);
   if (!path) {
     return res.status(400).json({ error: "Invalid media path." });
@@ -91,7 +89,7 @@ module.exports = async function handler(req, res) {
     const media = await mediaLoader.load(store, path);
     return sendMedia(req, res, media, path);
   } catch (error) {
-    console.error("Protected stories media:", error);
+    console.error("Public stories media:", error);
     if (error && error.status === 404) {
       return res.status(404).json({ error: "Media not found." });
     }
