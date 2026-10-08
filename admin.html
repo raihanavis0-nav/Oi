@@ -240,7 +240,7 @@
               <div id="seriesCoverPlaceholder">No cover</div>
             </div>
             <div class="series-cover-actions">
-              <input id="seriesCoverFileInput" type="file" accept="image/*" />
+              <label class="archive-image-picker"><input id="seriesCoverFileInput" type="file" accept="image/*" /><span>Choose cover</span></label>
               <p class="portrait-help">Portrait image, ideally 2:3. Upload happens automatically.</p>
               <button class="quiet-action" id="clearSeriesCoverBtn" type="button">Remove cover</button>
               <input id="seriesCoverPathInput" type="hidden" />
@@ -262,20 +262,20 @@
           <div class="portrait-editor">
             <div class="portrait-preview-wrap"><img id="portraitPreview" alt="" hidden /><div id="portraitPlaceholder">No portrait</div></div>
             <div class="portrait-actions">
-              <input id="portraitFileInput" type="file" accept="image/*" />
+              <label class="archive-image-picker"><input id="portraitFileInput" type="file" accept="image/*" /><span>Choose portrait</span></label>
               <p class="portrait-help">Choose an image. Preview and upload happen automatically.</p>
               <button class="quiet-action" id="clearPortraitBtn" type="button">Clear</button>
               <input id="portraitPathInput" type="hidden" />
             </div>
           </div>
         </div>
+        <p class="dialog-status" id="entityStatus" role="status"></p>
         <div class="dialog-foot">
           <button class="danger-action" id="deleteEntityBtn" type="button" hidden>Delete</button>
           <span class="dialog-spacer"></span>
           <button class="quiet-action" value="cancel">Cancel</button>
           <button class="primary-action" id="saveEntityBtn" type="button">Save</button>
         </div>
-        <p class="dialog-status" id="entityStatus" role="status"></p>
       </form>
     </dialog>
 
