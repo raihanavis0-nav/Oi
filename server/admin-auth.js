@@ -4,7 +4,7 @@ const COOKIE_NAME = "__Host-archive_admin";
 const SESSION_SECONDS = 7 * 24 * 60 * 60;
 
 function configuredPassword() {
-  return String(process.env.ADMIN_PASSWORD || "");
+  return String(process.env.THOUGHTS_ACCESS_CODE || "");
 }
 
 function constantTimeEqual(left, right) {
@@ -57,12 +57,12 @@ function parseCookies(req) {
 
 function verifyPassword(candidate) {
   const password = configuredPassword();
-  if (!password) return false;
+  if (!isConfigured()) return false;
   return constantTimeEqual(candidate, password);
 }
 
 function isAuthenticated(req) {
-  if (!configuredPassword()) return false;
+  if (!isConfigured()) return false;
 
   const token = parseCookies(req)[COOKIE_NAME];
   if (!token) return false;
@@ -95,7 +95,7 @@ function clearCookie() {
 }
 
 function isConfigured() {
-  return Boolean(configuredPassword());
+  return configuredPassword().length >= 4;
 }
 
 module.exports = {
