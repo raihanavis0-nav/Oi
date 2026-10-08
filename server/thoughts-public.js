@@ -12,7 +12,7 @@ function githubToken() {
 }
 
 function isConfigured() {
-  return Boolean(accessCode().length >= 16 && githubToken());
+  return Boolean(accessCode().length >= 4 && githubToken());
 }
 
 function safeEqual(a, b) {
