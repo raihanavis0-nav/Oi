@@ -363,8 +363,27 @@ module.exports = async function handler(req, res) {
       });
     }
 
+    if (error && error.status === 503) {
+      return res.status(503).json({
+        error: "Archive storage is not configured. Set THOUGHTS_GITHUB_TOKEN in the Vercel project environment.",
+        code: "STORAGE_NOT_CONFIGURED",
+      });
+    }
+    if (error && (error.status === 401 || error.status === 403)) {
+      return res.status(502).json({
+        error: "GitHub denied archive storage access. Check THOUGHTS_GITHUB_TOKEN and Contents read/write permission on the repository.",
+        code: "STORAGE_ACCESS_DENIED",
+      });
+    }
+    if (error && error.status === 404) {
+      return res.status(502).json({
+        error: "Archive storage repository, data file, or thoughts-data branch was not found or cannot be accessed by the token.",
+        code: "STORAGE_NOT_FOUND",
+      });
+    }
     return res.status(502).json({
-      error: "Could not update the stories library.",
+      error: "Could not update the stories library. Check the Vercel runtime logs for the GitHub storage error.",
+      code: "STORAGE_WRITE_FAILED",
     });
   }
 };
