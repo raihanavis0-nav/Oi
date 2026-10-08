@@ -22,6 +22,26 @@ function slugify(value) {
     .slice(0, 60);
 }
 
+function storageFailure(error) {
+  const code = Number(error && error.status) || 0;
+  if (code === 503 && /not configured/i.test(String(error.message || ""))) {
+    return { status: 503, error: "Image storage is not configured. Set THOUGHTS_GITHUB_TOKEN in the Vercel project environment.", code: "STORAGE_NOT_CONFIGURED" };
+  }
+  if (code === 401 || code === 403) {
+    return { status: 502, error: "GitHub denied image storage access. Check THOUGHTS_GITHUB_TOKEN and Contents read/write permission for this repository.", code: "STORAGE_ACCESS_DENIED" };
+  }
+  if (code === 404) {
+    return { status: 502, error: "GitHub could not find the image storage repository or thoughts-data branch with the configured token.", code: "STORAGE_NOT_FOUND" };
+  }
+  if (code === 409 || code === 422) {
+    return { status: 409, error: "GitHub rejected this image write because of a storage conflict. Select the image again to retry.", code: "STORAGE_CONFLICT" };
+  }
+  if (code === 429) {
+    return { status: 503, error: "GitHub image storage is rate limited. Please retry shortly.", code: "STORAGE_RATE_LIMIT" };
+  }
+  return { status: 502, error: "Image upload could not be saved to GitHub. Check the Vercel function logs for the underlying error.", code: "STORAGE_WRITE_FAILED" };
+}
+
 module.exports = async function handler(req, res) {
   admin.noStore(res);
   if (!admin.requireAuth(req, res)) return;
@@ -70,8 +90,7 @@ module.exports = async function handler(req, res) {
     });
   } catch (error) {
     console.error("Stories upload API:", error);
-    return res.status(502).json({
-      error: "Could not upload the image.",
-    });
+    const failure = storageFailure(error);
+    return res.status(failure.status).json({ error: failure.error, code: failure.code });
   }
 };
